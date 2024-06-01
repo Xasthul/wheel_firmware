@@ -3,7 +3,7 @@
 #include <AsyncUDP.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-#include "bluetooth/bluetooth.h"
+#include "bluetooth_core/bluetooth_core.h"
 
 void setup()
 {
