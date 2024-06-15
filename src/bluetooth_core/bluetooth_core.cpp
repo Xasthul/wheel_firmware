@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include <BLEDevice.h>
 #include <BLEUtils.h>
 #include <BLEServer.h>
@@ -9,21 +10,28 @@
 
 void BluetoothCore::initialize()
 {
+    Serial.println("Starting BLE work..");
+
     BLEDevice::init("The best wheel");
     BLEServer *pServer = BLEDevice::createServer();
+
     pServer->setCallbacks(new BluetoothConnectionCallbacks());
+
     BLEService *pService = pServer->createService(SERVICE_UUID);
     BLECharacteristic *pCharacteristic = pService->createCharacteristic(
         CHARACTERISTIC_UUID,
         BLECharacteristic::PROPERTY_READ |
             BLECharacteristic::PROPERTY_WRITE);
-
-    pCharacteristic->setValue("Hello World says Neil");
+    pCharacteristic->setValue("Hello World");
     pService->start();
+
     BLEAdvertising *pAdvertising = BLEDevice::getAdvertising(); // this still is working for backward compatibility
     pAdvertising->addServiceUUID(SERVICE_UUID);
     pAdvertising->setScanResponse(true);
     pAdvertising->setMinPreferred(0x06); // functions that help with iPhone connections issue
     pAdvertising->setMinPreferred(0x12);
+
     BLEDevice::startAdvertising();
+
+    Serial.println("Bluetooth started advertising");
 }

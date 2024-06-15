@@ -8,11 +8,9 @@
 void setup()
 {
   Serial.begin(115200);
-  BluetoothCore bluetoothCore;
+  BluetoothCore *bluetoothCore = new BluetoothCore;
 
-  Serial.println("Starting BLE work!");
-  bluetoothCore.initialize();
-  Serial.println("Characteristic defined! Now you can read it in your phone!");
+  bluetoothCore->initialize();
 }
 
 void loop()
